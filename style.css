@@ -3,3 +3,7 @@ body {
     text-align: center;
     margin: 0 auto;
 }
+
+.validation_wrong {
+    border: 2px red solid;
+}
