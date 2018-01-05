@@ -30,21 +30,22 @@ function markAsIncorrect(element) {
 }
 
 function markAsCorrect(event) {
-    (event.target).setAttribute("class", "validation");
+    if(event.target !== undefined)
+        (event.target).setAttribute("class", "validation");
 }
 
 function validate_email(input) {
     let regex = /[a-zA-Z_0-9\.]+@[a-zA-Z_0-9\.]+\.[a-zA-Z][a-zA-Z]+/;
-    return regex.test(input);
+    return regex.test(input.value);
 }
 
 function validate_password(input) {
     let regex = /^(?=.{8,})(?=.*\d)(?=.*[a-z])(?!.*\s).*$/;
-    return regex.test(input);
+    return regex.test(input.value);
 }
 
 function isEmpty(input) {
-    if (input.length === 0)
+    if (input.value.length === 0)
         return true;
     else
         return false;
@@ -55,7 +56,7 @@ function hasWhiteSpaces(input) {
     for (let i = 0; i < input.length; i++) {
         let c = input.charAt(i);
         if (ws.indexOf(c) === -1)
-            return false;
+            return true;
     }
-    return true;
+    return false;
 }
