@@ -8,19 +8,21 @@
 </head>
 <body>
 <div id="div_login">
-    <table>
-        <tr>
-            <td>Email</td>
-            <td><input class="validation" type="email" name="login" id="input_login_email"></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input class="validation" type="password" name="password" id="input_login_password"></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" id="button_login" value="Login"></td>
-        </tr>
-    </table>
+    <form action="login.php" method="post">
+        <table>
+            <tr>
+                <td>Email</td>
+                <td><input class="validation" type="email" name="login" id="input_login_email"></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input class="validation" type="password" name="password" id="input_login_password"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" id="button_login" value="Login"></td>
+            </tr>
+        </table>
+    </form>
 </div>
 </body>
 </html>
