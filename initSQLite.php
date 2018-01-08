@@ -8,8 +8,9 @@
     }
 
     function createDatabase($name) {
-        return new SQLite3($name);
-        // TODO: Initialize empty database
+        $db = new SQLite3($name);
+        $sql = file_get_contents("initDB.sql");
+        return $db;
     }
 
     if (file_exists("$dbName"))
