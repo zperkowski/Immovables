@@ -22,5 +22,5 @@ CREATE TABLE immovables(
   FOREIGN KEY (buyerid) REFERENCES users(id)
 );
 
-INSERT INTO users VALUES (0, "admin", "admin", "Administrator");
+INSERT INTO users VALUES (0, "admin@example.com", "admin", "Administrator");
 
