@@ -6,9 +6,8 @@
 </head>
 <body>
     <?php
-        echo $_POST["login"];
-        echo "<br>";
-        echo $_POST["password"];
+        require "User.php";
+        $user = new User($_POST["login"], $_POST["password"]);
     ?>
 </body>
 </html>

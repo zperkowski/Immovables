@@ -15,10 +15,15 @@
         return $db;
     }
 
-    if (file_exists("$dbName"))
-        $db = openDatabase($dbName);
-    else
-        $db = createDatabase($dbName);
+    function openOrCreateDB($dbName) {
+        if (file_exists("$dbName"))
+            $db = openDatabase($dbName);
+        else
+            $db = createDatabase($dbName);
+        return $db;
+    }
 
+    $db = openOrCreateDB($dbName);
+    return $db;
 ?>
 
