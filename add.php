@@ -8,6 +8,9 @@ if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
   header("location: login.php");
   exit;
 }
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +22,7 @@ if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
 </head>
 <body>
 <div>
-    <h1>Hi, <b><?php echo getUserName($_SESSION['email']); ?></b>. Welcome to our site.</h1>
+    <h1>Your properties, <b><?php echo getUserName($_SESSION['email']); ?></b>.</h1>
 </div>
 <p><a href="index.php">Home</a></p>
 <p><a href="add.php">Add a new immovable</a></p>
@@ -37,7 +40,7 @@ if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
         <th>Delete</th>
     </tr>
     <?php
-    getTableOfAllImmovables();
+    getTableOfImmovables(queryUsersImmovables(getUserID($_SESSION['email'])));
     ?>
 </table>
 
