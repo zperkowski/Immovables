@@ -12,6 +12,8 @@
         $sql = file_get_contents("initDB.sql");
         if (!$db->exec($sql))
             die("Couldn't init an empty database");
+        $pwd = password_hash("admin", PASSWORD_BCRYPT);
+        $db->exec("INSERT INTO users VALUES (0, 'admin@example.com', '$pwd', 'Administrator');");
         return $db;
     }
 

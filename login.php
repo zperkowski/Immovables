@@ -21,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate credentials
     if (empty($email_err) && empty($password_err)) {
-        $statment = "SELECT * FROM main.users WHERE email = '$email' AND pwd = '$password'";
+        $statment = "SELECT * FROM main.users WHERE email = '$email'";
         $user = dbQuery($statment)->fetchArray();
-        if ($user != null) {
+        if ($user != null && password_verify($password, $user['pwd'])) {
             session_start();
             $_SESSION['email'] = $email;
             header("location: index.php");
