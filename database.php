@@ -31,6 +31,16 @@
         return $db->query($statment);
     }
 
+    function queryImmovables() {
+        $db = openOrCreateDB();
+        return $db->query("SELECT * FROM immovables");
+    }
+
+    function getUserID($email) {
+        $db = openOrCreateDB();
+        return $db->query("SELECT id FROM users WHERE email == '.$email.';")->fetchArray()[0];
+    }
+
     $db = openOrCreateDB();
     return $db;
 ?>
