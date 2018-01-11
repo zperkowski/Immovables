@@ -15,7 +15,8 @@
         return $db;
     }
 
-    function openOrCreateDB($dbName) {
+    function openOrCreateDB() {
+        global $dbName;
         if (file_exists("$dbName"))
             $db = openDatabase($dbName);
         else
@@ -23,7 +24,12 @@
         return $db;
     }
 
-    $db = openOrCreateDB($dbName);
+    function dbQuery($statment) {
+        $db = openOrCreateDB();
+        return $db->query($statment);
+    }
+
+    $db = openOrCreateDB();
     return $db;
 ?>
 

@@ -1,5 +1,5 @@
 <?php
-require "initSQLite.php";
+require "database.php";
 
 class User
 {
