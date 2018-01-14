@@ -34,7 +34,7 @@ if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
         <th>Floors</th>
         <th>Balconies</th>
         <th>Price</th>
-        <th>Delete</th>
+        <th></th>
     </tr>
     <?php
     getTableOfAllImmovables();

@@ -33,6 +33,11 @@
         return $db->query($statment);
     }
 
+    function dbExec($statment) {
+        $db = openOrCreateDB();
+        return $db->Exec($statment);
+    }
+
     function queryImmovables() {
         $db = openOrCreateDB();
         return $db->query("SELECT * FROM immovables");
@@ -47,19 +52,52 @@
         return $db->query("SELECT id FROM users WHERE email == '$email';")->fetchArray()[0];
     }
 
+    function getUserEmail($id) {
+        $db = openOrCreateDB();
+        return $db->query("SELECT email FROM users WHERE id == '$id';")->fetchArray()[0];
+    }
+
     function getUserName($email) {
         $db = openOrCreateDB();
         return $db->query("SELECT name FROM users WHERE email == '$email';")->fetchArray()['name'];
     }
 
+    function getTableOfImmovableByID($id) {
+        $statment = "SELECT * FROM main.immovables WHERE id == '$id'";
+        $result = dbQuery($statment);
+        $row = $result->fetchArray();
+        $userid = getUserID($_SESSION['email']);
+        $table = "<table>
+            <tr><td>Title</td><td>".$row['title']."</td></tr>
+            <tr><td>Address</td><td>".$row['address']."</td></tr>
+            <tr><td>m2</td><td>".$row['m2']."</td></tr>
+            <tr><td>Rooms</td><td>".$row['rooms']."</td></tr>
+            <tr><td>Floors</td><td>".$row['floors']."</td></tr>
+            <tr><td>Balconies</td><td>".$row['balconies']."</td></tr>
+            <tr><td>Price</td><td>".$row['price']."</td></tr>
+            <tr><td>Description</td><td>".$row['desc']."</td></tr>";
+
+        if ($row['ownerid'] != $userid && !is_numeric($row['buyerid']))
+            $table = $table . "<tr><td><a href='details.php?id=".$row['id']."&buyer=".$userid."'>Buy</a></td><td></td></tr>";
+
+        $table = $table . "</table>";
+        echo $table;
+    }
+
     function getTableOfAllImmovables() {
         $result = queryImmovables();
         while ($row = $result->fetchArray()) {
-            $echoRow = "<tr><td>".$row['title']."</td><td>".$row['address']."</td><td>".$row['m2']."</td><td>".$row['rooms']."</td><td>".$row['floors']."</td><td>".$row['balconies']."</td><td>".$row['price']."</td>";
-            if ($row['ownerid'] == getUserID($_SESSION['email']))
-                $echoRow = $echoRow."<td>Delete</td>";
-            $echoRow = $echoRow."</tr>";
-            echo $echoRow;
+            if ($row['buyerid'] != "-1") {
+                $link = "<a href='details.php?id=" . $row['id'] . "'>";
+                $linkend = "</a>";
+                $echoRow = "<tr><td>" . $link . $row['title'] . $linkend . "</td><td>" . $row['address'] . "</td><td>" . $row['m2'] . "</td><td>" . $row['rooms'] . "</td><td>" . $row['floors'] . "</td><td>" . $row['balconies'] . "</td><td>" . $row['price'] . "</td>";
+                if ($row['ownerid'] == getUserID($_SESSION['email']) && !is_numeric($row['buyerid']))
+                    $echoRow = $echoRow . "<td>Delete</td>";
+                else if (is_numeric($row['buyerid']))
+                    $echoRow = $echoRow . "<td>Bought</td>";
+                $echoRow = $echoRow . "</tr>";
+                echo $echoRow;
+            }
         }
     }
 
