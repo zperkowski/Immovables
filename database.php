@@ -103,7 +103,14 @@
 
     function getTableOfImmovables($queryResult) {
         while ($row = $queryResult->fetchArray()) {
-            echo "<tr><td>".$row['title']."</td><td>".$row['address']."</td><td>".$row['m2']."</td><td>".$row['rooms']."</td><td>".$row['floors']."</td><td>".$row['balconies']."</td><td>".$row['price']."</td><td>Delete</td></tr>";
+            $echorow = "<tr><td>".$row['title']."</td><td>".$row['address']."</td><td>".$row['m2']."</td><td>".$row['rooms']."</td><td>".$row['floors']."</td><td>".$row['balconies']."</td><td>".$row['price']."</td><td><a href='add.php?deleteid=".$row['id']."'>Delete</a>";
+            if (is_numeric($row['buyerid'])) {
+                $buyeremail = getUserEmail($row['buyerid']);
+
+                $echorow = $echorow . " Bought by: $buyeremail";
+            }
+            $echorow = $echorow . "</td></tr>";
+            echo $echorow;
         }
     }
 

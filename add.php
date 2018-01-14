@@ -19,6 +19,14 @@ $balconies = $balconies_err = "";
 $desc = "";
 $picture = null;
 
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    if (isset($_GET['deleteid'])) {
+        $deleteid = $_GET['deleteid'];
+        $statment = "DELETE FROM main.immovables WHERE id == '$deleteid'";
+        dbExec($statment);
+    }
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty(trim($_POST['title'])))
         $title_err = "Requried";
@@ -102,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <th>Floors</th>
         <th>Balconies</th>
         <th>Price</th>
-        <th>Delete</th>
+        <th></th>
     </tr>
     <?php
     getTableOfImmovables(queryUsersImmovables(getUserID($_SESSION['email'])));
