@@ -82,6 +82,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       NULL)";
         if (!$db->exec($statment))
             die("Error - Couldn't add");
+
+        if ($_FILES['picture']['size'] > 0) {
+            $query = $db->prepare("UPDATE main.immovables SET picture=? WHERE title='$title' AND address='$address' AND ownerid='$ownerid';");
+            $image=file_get_contents($_FILES['picture']['tmp_name']);
+            $query->bindValue(1, $image, SQLITE3_BLOB);
+            $run=$query->execute();
+            if(!$run)
+                die("Picture upload error");
+        }
+        echo "<h1>Successful</h1>";
     }
 }
 ?>
@@ -117,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ?>
 </table>
 
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+<form enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
     <table>
         <tr><td>Title*</td><td><input type="text" name="title" value = <?php echo "$title_err"?>></td></tr>
         <tr><td>Address*</td><td><input type="text" name="address" value = <?php echo "$address_err"?>></td></tr>
@@ -127,6 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <tr><td>Balconies</td><td><input type="text" name="balconies" value = <?php echo "$balconies_err"?>></td></tr>
         <tr><td>Price*</td><td><input type="text" name="price" value = <?php echo "$price_err"?>></td></tr>
         <tr><td>Description</td><td><textarea name="description" rows="6" cols="18" maxlength="100"></textarea></td></tr>
+        <tr><td>Picture</td><td><input type="file" name="picture"></td></tr>
         <tr><td colspan="2"><input id="add_button" type="submit" value="Add"></td></tr>
     </table>
 </form>
