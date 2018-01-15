@@ -86,31 +86,28 @@
 
     function getTableOfAllImmovables() {
         $result = queryImmovables();
+        getTableOfImmovables($result);
+    }
+
+    function getTableOfImmovables($result) {
         while ($row = $result->fetchArray()) {
             if ($row['buyerid'] != "-1") {
                 $link = "<a href='details.php?id=" . $row['id'] . "'>";
                 $linkend = "</a>";
                 $echoRow = "<tr><td>" . $link . $row['title'] . $linkend . "</td><td>" . $row['address'] . "</td><td>" . $row['m2'] . "</td><td>" . $row['rooms'] . "</td><td>" . $row['floors'] . "</td><td>" . $row['balconies'] . "</td><td>" . $row['price'] . "</td>";
-                if ($row['ownerid'] == getUserID($_SESSION['email']) && !is_numeric($row['buyerid']))
-                    $echoRow = $echoRow . "<td>Delete</td>";
-                else if (is_numeric($row['buyerid']))
-                    $echoRow = $echoRow . "<td>Bought</td>";
+                if ($row['ownerid'] == getUserID($_SESSION['email'])) {
+                    $echoRow = $echoRow . "<td><a href='add.php?deleteid=" . $row['id'] . "'>Delete</a></td>";
+                    if (is_numeric($row['buyerid'])) {
+                        $buyeremail = getUserEmail($row['buyerid']);
+                        $echoRow = $echoRow . "<td>Bought by: $buyeremail</td>";
+                    }
+                } else {
+                    if (is_numeric($row['buyerid']))
+                        $echoRow = $echoRow . "<td>Bought</td>";
+                }
                 $echoRow = $echoRow . "</tr>";
                 echo $echoRow;
             }
-        }
-    }
-
-    function getTableOfImmovables($queryResult) {
-        while ($row = $queryResult->fetchArray()) {
-            $echorow = "<tr><td>".$row['title']."</td><td>".$row['address']."</td><td>".$row['m2']."</td><td>".$row['rooms']."</td><td>".$row['floors']."</td><td>".$row['balconies']."</td><td>".$row['price']."</td><td><a href='add.php?deleteid=".$row['id']."'>Delete</a>";
-            if (is_numeric($row['buyerid'])) {
-                $buyeremail = getUserEmail($row['buyerid']);
-
-                $echorow = $echorow . " Bought by: $buyeremail";
-            }
-            $echorow = $echorow . "</td></tr>";
-            echo $echorow;
         }
     }
 
