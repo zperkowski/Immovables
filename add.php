@@ -4,15 +4,15 @@ require_once "database.php";
 session_start();
 
 // If session variable is not set it will redirect to login page
-if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
-  header("location: login.php");
-  exit;
+if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
+    header("location: login.php");
+    exit;
 }
 
 $title = $title_err = "";
 $address = $address_err = "";
 $price = $price_err = "";
-$m2 = $m2_err= "";
+$m2 = $m2_err = "";
 $rooms = $rooms_err = "";
 $floors = $floors_err = "";
 $balconies = $balconies_err = "";
@@ -85,10 +85,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($_FILES['picture']['size'] > 0) {
             $query = $db->prepare("UPDATE main.immovables SET picture=? WHERE title='$title' AND address='$address' AND ownerid='$ownerid';");
-            $image=file_get_contents($_FILES['picture']['tmp_name']);
+            $image = file_get_contents($_FILES['picture']['tmp_name']);
+            $image = base64_encode($image);
             $query->bindValue(1, $image, SQLITE3_BLOB);
-            $run=$query->execute();
-            if(!$run)
+            $run = $query->execute();
+            if (!$run)
                 die("Picture upload error");
         }
         echo "<h1>Successful</h1>";
@@ -101,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
-<!--    <link rel="stylesheet" href="style.css">-->
+    <!--    <link rel="stylesheet" href="style.css">-->
 </head>
 <body>
 <div>
@@ -129,16 +130,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <form enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
     <table>
-        <tr><td>Title*</td><td><input type="text" name="title" value = <?php echo "$title_err"?>></td></tr>
-        <tr><td>Address*</td><td><input type="text" name="address" value = <?php echo "$address_err"?>></td></tr>
-        <tr><td>m2</td><td><input type="text" name="m2" value = <?php echo "$m2_err"?>></td></tr>
-        <tr><td>Rooms</td><td><input type="text" name="rooms" value = <?php echo "$rooms_err"?>></td></tr>
-        <tr><td>Floors</td><td><input type="text" name="floors" value = <?php echo "$floors_err"?>></td></tr>
-        <tr><td>Balconies</td><td><input type="text" name="balconies" value = <?php echo "$balconies_err"?>></td></tr>
-        <tr><td>Price*</td><td><input type="text" name="price" value = <?php echo "$price_err"?>></td></tr>
-        <tr><td>Description</td><td><textarea name="description" rows="6" cols="18" maxlength="100"></textarea></td></tr>
-        <tr><td>Picture</td><td><input type="file" name="picture"></td></tr>
-        <tr><td colspan="2"><input id="add_button" type="submit" value="Add"></td></tr>
+        <tr>
+            <td>Title*</td>
+            <td><input type="text" name="title" value= <?php echo "$title_err" ?>></td>
+        </tr>
+        <tr>
+            <td>Address*</td>
+            <td><input type="text" name="address" value= <?php echo "$address_err" ?>></td>
+        </tr>
+        <tr>
+            <td>m2</td>
+            <td><input type="text" name="m2" value= <?php echo "$m2_err" ?>></td>
+        </tr>
+        <tr>
+            <td>Rooms</td>
+            <td><input type="text" name="rooms" value= <?php echo "$rooms_err" ?>></td>
+        </tr>
+        <tr>
+            <td>Floors</td>
+            <td><input type="text" name="floors" value= <?php echo "$floors_err" ?>></td>
+        </tr>
+        <tr>
+            <td>Balconies</td>
+            <td><input type="text" name="balconies" value= <?php echo "$balconies_err" ?>></td>
+        </tr>
+        <tr>
+            <td>Price*</td>
+            <td><input type="text" name="price" value= <?php echo "$price_err" ?>></td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td><textarea name="description" rows="6" cols="18" maxlength="100"></textarea></td>
+        </tr>
+        <tr>
+            <td>Picture</td>
+            <td><input type="file" name="picture"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input id="add_button" type="submit" value="Add"></td>
+        </tr>
     </table>
 </form>
 </body>

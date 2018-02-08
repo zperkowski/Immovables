@@ -82,6 +82,10 @@
 
         $table = $table . "</table>";
         echo $table;
+
+        if ($row['picture'] != NULL) {
+            echo '<img src="data:image/jpeg;base64,'. $row['picture'] .'"/>';
+        }
     }
 
     function getTableOfAllImmovables() {
