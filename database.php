@@ -12,10 +12,8 @@
         $sql = file_get_contents("initDB.sql");
         if (!$db->exec($sql))
             die("Couldn't init an empty database");
-        $pwd = password_hash("admin", PASSWORD_BCRYPT);
-        $db->exec("INSERT INTO users VALUES (0, 'admin@example.com', '$pwd', 'Administrator');");
-        $pwd = password_hash("user1", PASSWORD_BCRYPT);
-        $db->exec("INSERT INTO users VALUES (NULL, 'user1@example.com', '$pwd', 'First user');");
+        createUser(0, 'admin@example.com', '0000', 'admin', "Administrator");
+        createUser(NULL, 'user1@example.com', '1111', 'user1', 'First user');
         return $db;
     }
 
@@ -60,6 +58,20 @@
     function getUserName($email) {
         $db = openOrCreateDB();
         return $db->query("SELECT name FROM users WHERE email == '$email';")->fetchArray()['name'];
+    }
+
+    function getUserNumber($email) {
+        $db = openOrCreateDB();
+        return $db->query("SELECT number FROM users WHERE email == '$email';")->fetchArray()['number'];
+    }
+
+    function createUser($id, $email, $number, $password, $name) {
+        $db = openOrCreateDB();
+        $pwd = password_hash($password, PASSWORD_BCRYPT);
+        if ($id != NULL)
+            $db->exec("INSERT INTO users VALUES ('$id', '$email', '$pwd', '$name', '$number');");
+        else
+            $db->exec("INSERT INTO users VALUES (NULL, '$email', '$pwd', '$name', '$number');");
     }
 
     function getTableOfImmovableByID($id) {
