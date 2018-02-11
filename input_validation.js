@@ -5,6 +5,7 @@ window.onload = function () {
         element.addEventListener("blur", validate_elements);
         element.addEventListener("focus", markAsCorrect);
     }
+    disableSubmit();
 };
 
 function validate_elements() {
@@ -18,11 +19,18 @@ function validate_elements() {
             case "password":
                 isCorrect = validate_password(element);
                 break;
+            default:
+                isCorrect = true;
+                break;
         }
-    if (isCorrect)
+    if (isCorrect) {
         markAsCorrect(element);
-    else
+        enableSubmit();
+        //TODO: Create a list with information about every element
+    } else {
         markAsIncorrect(element);
+        disableSubmit();
+    }
 }
 
 function markAsIncorrect(element) {
@@ -32,6 +40,14 @@ function markAsIncorrect(element) {
 function markAsCorrect(event) {
     if(event.target !== undefined)
         (event.target).setAttribute("class", "validation");
+}
+
+function disableSubmit() {
+    document.getElementById("button_login").disabled = true;
+}
+
+function enableSubmit() {
+    document.getElementById("button_login").disabled = false;
 }
 
 function validate_email(input) {

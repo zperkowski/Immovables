@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Login</title>
 </head>
 <body>
-<a href="login.php">Login</a>
+<a href="login.php">Register</a>
 <div id="div_login">
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <table>
@@ -83,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </tr>
             <tr>
                 <td>Validate password</td>
-                <td><input class="validation" type="password" name="password2" id="input_login_password"></td>
+                <td><input class="validation" type="password" name="password2" id="input_login_password2"></td>
             </tr>
             <tr>
                 <td colspan="2"><input type="submit" id="button_login" value="Register"></td>
