@@ -23,6 +23,7 @@ if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
 </div>
 <p><a href="index.php">Home</a></p>
 <p><a href="add.php">Add a new immovable</a></p>
+<p><a href="changePwd.php">Change password</a></p>
 <p><a href="logout.php">Sign Out of Your Account</a></p>
 
 <table>

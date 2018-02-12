@@ -65,6 +65,12 @@
         return $db->query("SELECT number FROM users WHERE email == '$email';")->fetchArray()['number'];
     }
 
+    function getUserPassword($email) {
+        $db = openOrCreateDB();
+        $id = getUserID($email);
+        return $db->query("SELECT pwd FROM users WHERE id == '$id';")->fetchArray()[0];
+    }
+
     function createUser($id, $email, $number, $password, $name) {
         $db = openOrCreateDB();
         $pwd = password_hash($password, PASSWORD_BCRYPT);
@@ -72,6 +78,17 @@
             $db->exec("INSERT INTO users VALUES ('$id', '$email', '$pwd', '$name', '$number');");
         else
             $db->exec("INSERT INTO users VALUES (NULL, '$email', '$pwd', '$name', '$number');");
+    }
+
+    function changePassword($email, $oldpassword, $newpassword) {
+        $db = openOrCreateDB();
+        if (password_verify($oldpassword, getUserPassword($email))) {
+            $newpassword = password_hash($newpassword, PASSWORD_BCRYPT);
+            $id = getUserID($email);
+            if ($db->exec("UPDATE users SET pwd = '$newpassword' WHERE id == '$id';"))
+                return true;
+        }
+        return false;
     }
 
     function getTableOfImmovableByID($id) {
@@ -126,7 +143,7 @@
             }
         }
     }
-
+//$2y$10$eVUZXyf9n3keCA7x8sPOy.c6yrf.93IDBvDSb3ziQYBBJoutHfzkC
     $db = openOrCreateDB();
     return $db;
 ?>
