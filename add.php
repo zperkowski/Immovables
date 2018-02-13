@@ -24,6 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $deleteid = $_GET['deleteid'];
         $statment = "DELETE FROM main.immovables WHERE id == '$deleteid'";
         dbExec($statment);
+        $statment = "DELETE FROM pictures WHERE id_immo == '$deleteid'";
+        dbExec($statment);
     }
 }
 
@@ -77,19 +79,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       '$floors',
                       '$balconies',
                       '$desc',
-                      NULL,
                       '$ownerid',
                       NULL)";
         if (!$db->exec($statment))
             die("Error - Couldn't add");
 
         if ($_FILES['picture']['size'] > 0) {
-            $query = $db->prepare("UPDATE main.immovables SET picture=? WHERE title='$title' AND address='$address' AND ownerid='$ownerid';");
+            $immo_id = $db->query("SELECT id FROM immovables WHERE title == '$title'
+                                      AND address == '$address'
+                                      AND price == '$price'
+                                      AND ownerid == '$ownerid';")->fetchArray()[0];
             $image = file_get_contents($_FILES['picture']['tmp_name']);
             $image = base64_encode($image);
-            $query->bindValue(1, $image, SQLITE3_BLOB);
-            $run = $query->execute();
-            if (!$run)
+            //TODO: Add more pictures at once
+            $query = $db->exec("INSERT INTO pictures VALUES (
+                NULL,
+                '$immo_id',
+                '$image');");
+            if (!$query)
                 die("Picture upload error");
         }
         echo "<h1>Successful</h1>";

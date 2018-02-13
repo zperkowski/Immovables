@@ -71,6 +71,11 @@
         return $db->query("SELECT pwd FROM users WHERE id == '$id';")->fetchArray()[0];
     }
 
+    function getPictures($id) {
+        $db = openOrCreateDB();
+        return $db->query("SELECT picture FROM pictures WHERE id_immo == '$id';")->fetchArray();
+    }
+
     function createUser($id, $email, $number, $password, $name) {
         $db = openOrCreateDB();
         $pwd = password_hash($password, PASSWORD_BCRYPT);
@@ -109,12 +114,13 @@
         if ($row['ownerid'] != $userid && !is_numeric($row['buyerid']))
             $table = $table . "<tr><td><a href='details.php?id=".$row['id']."&buyer=".$userid."'>Buy</a></td><td></td></tr>";
 
-        $table = $table . "</table>";
+        $table = $table . "</table>\n";
         echo $table;
-
-        if ($row['picture'] != NULL) {
-            echo '<img src="data:image/jpeg;base64,'. $row['picture'] .'"/>';
-        }
+        $pictures = getPictures($row['id']);
+        if ($pictures != null)
+            for ($i = 0; $i < count($pictures) / 2; $i++) { // Dividing by 2 because of the associated array
+                echo '<img src="data:image/jpeg;base64,'. $pictures[$i] .'"/>';
+            }
     }
 
     function getTableOfAllImmovables() {
@@ -143,7 +149,7 @@
             }
         }
     }
-//$2y$10$eVUZXyf9n3keCA7x8sPOy.c6yrf.93IDBvDSb3ziQYBBJoutHfzkC
+
     $db = openOrCreateDB();
     return $db;
 ?>

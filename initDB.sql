@@ -16,11 +16,17 @@ CREATE TABLE immovables (
   floors    INT,
   balconies INT,
   desc      TEXT,
-  picture   BLOB,
   ownerid   INTEGER                           NOT NULL,
   buyerid   INTEGER DEFAULT NULL,
   FOREIGN KEY (ownerid) REFERENCES users (id),
   FOREIGN KEY (buyerid) REFERENCES users (id)
+);
+
+CREATE TABLE pictures (
+  id      INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  id_immo INTEGER                           NOT NULL,
+  picture BLOB                              NOT NULL,
+  FOREIGN KEY (id_immo) REFERENCES immovables (id)
 );
 
 INSERT INTO immovables VALUES (
@@ -33,7 +39,6 @@ INSERT INTO immovables VALUES (
   1,
   0,
   'Desc1',
-  NULL,
   0,
   NULL
 );
@@ -48,7 +53,6 @@ INSERT INTO immovables VALUES (
   1,
   0,
   'Desc2',
-  NULL,
   0,
   NULL
 );
@@ -63,7 +67,6 @@ INSERT INTO immovables VALUES (
   1,
   1,
   'Desc2',
-  NULL,
   1,
   NULL
 );
