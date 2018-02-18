@@ -39,7 +39,7 @@ INSERT INTO immovables VALUES (
   1,
   0,
   'Desc1',
-  0,
+  1,
   NULL
 );
 
@@ -53,7 +53,7 @@ INSERT INTO immovables VALUES (
   1,
   0,
   'Desc2',
-  0,
+  1,
   NULL
 );
 
@@ -67,6 +67,6 @@ INSERT INTO immovables VALUES (
   1,
   1,
   'Desc2',
-  1,
+  2,
   NULL
 );

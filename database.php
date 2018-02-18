@@ -12,8 +12,8 @@
         $sql = file_get_contents("initDB.sql");
         if (!$db->exec($sql))
             die("Couldn't init an empty database");
-        createUser(0, 'admin@example.com', '0000', 'admin', "Administrator");
-        createUser(NULL, 'user1@example.com', '1111', 'user1', 'First user');
+        createUser(1, 'admin@example.com', '0000', 'Admin1111', "Administrator");
+        createUser(2, 'user1@example.com', '1111', 'User1111', 'First user');
         return $db;
     }
 
