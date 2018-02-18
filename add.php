@@ -84,22 +84,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!$db->exec($statment))
             die("Error - Couldn't add");
 
-        if ($_FILES['picture']['size'] > 0) {
-            $immo_id = $db->query("SELECT id FROM immovables WHERE title == '$title'
+        $files = count($_FILES['picture']['size']);
+        if ($files > 0) {
+            for ($i = 0; $i < $files; $i++) {
+                $immo_id = $db->query("SELECT id FROM immovables WHERE title == '$title'
                                       AND address == '$address'
                                       AND price == '$price'
                                       AND ownerid == '$ownerid';")->fetchArray()[0];
-            $image = file_get_contents($_FILES['picture']['tmp_name']);
-            $image = base64_encode($image);
-            //TODO: Add more pictures at once
-            $query = $db->exec("INSERT INTO pictures VALUES (
+                $image = file_get_contents($_FILES['picture']['tmp_name'][$i]);
+                $image = base64_encode($image);
+                //TODO: Add more pictures at once
+                $query = $db->exec("INSERT INTO pictures VALUES (
                 NULL,
                 '$immo_id',
                 '$image');");
-            if (!$query)
-                die("Picture upload error");
+                if (!$query)
+                    die("Picture upload error");
+            }
         }
-        echo "<h1>Successful</h1>";
+        // Clear old pictures from previous uploads
+        foreach ($_FILES as $PIC) {
+            unset($PIC);
+        }
+        echo "<h1>Successful: Immovable with $files pictures</h1>";
     }
 }
 ?>
@@ -171,7 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </tr>
         <tr>
             <td>Picture</td>
-            <td><input type="file" name="picture"></td>
+            <td><input type="file" name="picture[]" multiple></td>
         </tr>
         <tr>
             <td colspan="2"><input id="add_button" type="submit" value="Add"></td>

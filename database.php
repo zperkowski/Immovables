@@ -73,7 +73,8 @@
 
     function getPictures($id) {
         $db = openOrCreateDB();
-        return $db->query("SELECT picture FROM pictures WHERE id_immo == '$id';")->fetchArray();
+        $result = $db->query("SELECT picture FROM pictures WHERE id_immo == '$id';");
+        return $result;
     }
 
     function createUser($id, $email, $number, $password, $name) {
@@ -117,10 +118,9 @@
         $table = $table . "</table>\n";
         echo $table;
         $pictures = getPictures($row['id']);
-        if ($pictures != null)
-            for ($i = 0; $i < count($pictures) / 2; $i++) { // Dividing by 2 because of the associated array
-                echo '<img src="data:image/jpeg;base64,'. $pictures[$i] .'"/>';
-            }
+        while($row = $pictures->fetchArray(SQLITE3_NUM)) {
+            echo '<img src="data:image/jpeg;base64,'. $row[0] .'"/>';
+        }
     }
 
     function getTableOfAllImmovables() {
