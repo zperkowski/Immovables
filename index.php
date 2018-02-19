@@ -15,32 +15,38 @@ if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
-<!--    <link rel="stylesheet" href="style.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-<div>
-    <h1>Hi, <b><?php echo getUserName($_SESSION['email']); ?></b>. Welcome to our site.</h1>
+<h1 class="text-center">Hi, <b><?php echo getUserName($_SESSION['email']); ?></b>. Welcome to our site.</h1>
+<div class="container">
+    <div class="row">
+        <div class="col mr-auto">
+            <p><a href="index.php">Home</a></p>
+            <p><a href="add.php">Add a new immovable</a></p>
+            <p><a href="changePwd.php">Change password</a></p>
+            <p><a href="logout.php">Sign out</a></p>
+        </div>
+        <div class="col-10 mr-auto">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Address</th>
+                        <th>m2</th>
+                        <th>Rooms</th>
+                        <th>Floors</th>
+                        <th>Balconies</th>
+                        <th>Price</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <?php
+                getTableOfAllImmovables();
+                ?>
+            </table>
+        </div>
+    </div>
 </div>
-<p><a href="index.php">Home</a></p>
-<p><a href="add.php">Add a new immovable</a></p>
-<p><a href="changePwd.php">Change password</a></p>
-<p><a href="logout.php">Sign Out of Your Account</a></p>
-
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Address</th>
-        <th>m2</th>
-        <th>Rooms</th>
-        <th>Floors</th>
-        <th>Balconies</th>
-        <th>Price</th>
-        <th></th>
-    </tr>
-    <?php
-    getTableOfAllImmovables();
-    ?>
-</table>
-
 </body>
 </html>

@@ -102,7 +102,7 @@
         $result = dbQuery($statment);
         $row = $result->fetchArray();
         $userid = getUserID($_SESSION['email']);
-        $table = "<table>
+        $table = "<table class='table'>
             <tr><td>Title</td><td>".$row['title']."</td></tr>
             <tr><td>Address</td><td>".$row['address']."</td></tr>
             <tr><td>m2</td><td>".$row['m2']."</td></tr>

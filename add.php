@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         foreach ($_FILES as $PIC) {
             unset($PIC);
         }
-        echo "<h1>Successful: Immovable with $files pictures</h1>";
+        echo "<h2 class='text-center'>Successful: Immovable with $files pictures</h2>";
     }
 }
 ?>
@@ -116,74 +116,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
-    <!--    <link rel="stylesheet" href="style.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-<div>
-    <h1>Your properties, <b><?php echo getUserName($_SESSION['email']); ?></b>.</h1>
+<h1 class="text-center">Your properties, <b><?php echo getUserName($_SESSION['email']); ?></b>.</h1>
+<div class="container">
+    <div class="row">
+        <div class="col mr-auto">
+            <p><a href="index.php">Home</a></p>
+            <p><a href="add.php">Add a new immovable</a></p>
+            <p><a href="changePwd.php">Change password</a></p>
+            <p><a href="logout.php">Sign out</a></p>
+        </div>
+        <div class="col-10 mr-auto">
+            <table class="table">
+                <tr>
+                    <th>Title</th>
+                    <th>Address</th>
+                    <th>m2</th>
+                    <th>Rooms</th>
+                    <th>Floors</th>
+                    <th>Balconies</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+                <?php
+                getTableOfImmovables(queryUsersImmovables(getUserID($_SESSION['email'])));
+                ?>
+            </table>
+        </div>
+    </div>
+    <h1 class="text-center">Add new propertie</h1>
+    <form enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <table class="table">
+            <tr>
+                <td>Title*</td>
+                <td><input type="text" name="title" value= <?php echo "$title_err" ?>></td>
+            </tr>
+            <tr>
+                <td>Address*</td>
+                <td><input type="text" name="address" value= <?php echo "$address_err" ?>></td>
+            </tr>
+            <tr>
+                <td>m2</td>
+                <td><input type="text" name="m2" value= <?php echo "$m2_err" ?>></td>
+            </tr>
+            <tr>
+                <td>Rooms</td>
+                <td><input type="text" name="rooms" value= <?php echo "$rooms_err" ?>></td>
+            </tr>
+            <tr>
+                <td>Floors</td>
+                <td><input type="text" name="floors" value= <?php echo "$floors_err" ?>></td>
+            </tr>
+            <tr>
+                <td>Balconies</td>
+                <td><input type="text" name="balconies" value= <?php echo "$balconies_err" ?>></td>
+            </tr>
+            <tr>
+                <td>Price*</td>
+                <td><input type="text" name="price" value= <?php echo "$price_err" ?>></td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td><textarea name="description" rows="6" cols="18" maxlength="100"></textarea></td>
+            </tr>
+            <tr>
+                <td>Pictures</td>
+                <td><input type="file" name="picture[]" multiple></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input id="add_button" type="submit" value="Add"></td>
+            </tr>
+        </table>
+    </form>
 </div>
-<p><a href="index.php">Home</a></p>
-<p><a href="add.php">Add a new immovable</a></p>
-<p><a href="logout.php">Sign Out of Your Account</a></p>
-
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Address</th>
-        <th>m2</th>
-        <th>Rooms</th>
-        <th>Floors</th>
-        <th>Balconies</th>
-        <th>Price</th>
-        <th></th>
-    </tr>
-    <?php
-    getTableOfImmovables(queryUsersImmovables(getUserID($_SESSION['email'])));
-    ?>
-</table>
-
-<form enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-    <table>
-        <tr>
-            <td>Title*</td>
-            <td><input type="text" name="title" value= <?php echo "$title_err" ?>></td>
-        </tr>
-        <tr>
-            <td>Address*</td>
-            <td><input type="text" name="address" value= <?php echo "$address_err" ?>></td>
-        </tr>
-        <tr>
-            <td>m2</td>
-            <td><input type="text" name="m2" value= <?php echo "$m2_err" ?>></td>
-        </tr>
-        <tr>
-            <td>Rooms</td>
-            <td><input type="text" name="rooms" value= <?php echo "$rooms_err" ?>></td>
-        </tr>
-        <tr>
-            <td>Floors</td>
-            <td><input type="text" name="floors" value= <?php echo "$floors_err" ?>></td>
-        </tr>
-        <tr>
-            <td>Balconies</td>
-            <td><input type="text" name="balconies" value= <?php echo "$balconies_err" ?>></td>
-        </tr>
-        <tr>
-            <td>Price*</td>
-            <td><input type="text" name="price" value= <?php echo "$price_err" ?>></td>
-        </tr>
-        <tr>
-            <td>Description</td>
-            <td><textarea name="description" rows="6" cols="18" maxlength="100"></textarea></td>
-        </tr>
-        <tr>
-            <td>Picture</td>
-            <td><input type="file" name="picture[]" multiple></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input id="add_button" type="submit" value="Add"></td>
-        </tr>
-    </table>
-</form>
 </body>
 </html>

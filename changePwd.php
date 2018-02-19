@@ -56,32 +56,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="input_validation.js"></script>
     <title>Login</title>
 </head>
 <body>
-<a href="index.php.php">Home page</a>
-<div id="div_login">
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <table>
-            <tr>
-                <td>Old password</td>
-                <td><input class="validation" type="password" name="oldpassword" id="input_login_oldpassword"></td>
-            </tr>
-            <tr>
-                <td>New password</td>
-                <td><input class="validation" type="password" name="password" id="input_login_password"></td>
-            </tr>
-            <tr>
-                <td>Validate new password</td>
-                <td><input class="validation" type="password" name="password2" id="input_login_password2"></td>
-            </tr>
-            <tr>
-                <td colspan="2"><input type="submit" id="button_login" value="Change"></td>
-            </tr>
-        </table>
-    </form>
+<h1 class="text-center">Change password</h1>
+<div class="container">
+    <div class="row">
+        <div class="col mr-auto">
+            <p><a href="index.php">Home</a></p>
+            <p><a href="add.php">Add a new immovable</a></p>
+            <p><a href="changePwd.php">Change password</a></p>
+            <p><a href="logout.php">Sign out</a></p>
+        </div>
+        <div class="col-8 mr-auto">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <table>
+                    <tr>
+                        <td>Old password</td>
+                        <td><input class="text-success" type="password" name="oldpassword" id="input_login_oldpassword">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>New password</td>
+                        <td><input class="text-success" type="password" name="password" id="input_login_password"></td>
+                    </tr>
+                    <tr>
+                        <td>Validate new password</td>
+                        <td><input class="text-success" type="password" name="password2" id="input_login_password2"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="submit" id="button_login" value="Change"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
 </div>
 </body>
 </html>

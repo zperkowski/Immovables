@@ -39,28 +39,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="input_validation.js"></script>
     <title>Login</title>
 </head>
 <body>
-<a href="register.php">Register</a>
-<div id="div_login">
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <table>
-            <tr>
-                <td>Email</td>
-                <td><input class="validation" type="email" name="email" id="input_login_email"></td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td><input class="validation" type="password" name="password" id="input_login_password"></td>
-            </tr>
-            <tr>
-                <td colspan="2"><input type="submit" id="button_login" value="Login"></td>
-            </tr>
-        </table>
-    </form>
+<h1 class="text-center">Login</h1>
+<div class="container">
+    <div class="row">
+        <div class="col mr-auto">
+            <p><a href="login.php">Login</a></p>
+            <p><a href="register.php">Register</a></p>
+        </div>
+        <div class="col-8 mr-auto">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <table>
+                    <tr>
+                        <td>Email</td>
+                        <td><input class="text-success" type="email" name="email" id="input_login_email"></td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td><input class="text-success" type="password" name="password" id="input_login_password"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="submit" id="button_login" value="Login"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 var elements_to_validate;
 window.onload = function () {
-    elements_to_validate = document.querySelectorAll('.validation,.validation_wrong');
+    elements_to_validate = document.querySelectorAll('.text-success,.text-danger');
     for (element of elements_to_validate) {
         element.addEventListener("blur", validate_elements);
         element.addEventListener("focus", markAsCorrect);
@@ -34,12 +34,12 @@ function validate_elements() {
 }
 
 function markAsIncorrect(element) {
-    element.setAttribute("class", "validation_wrong");
+    element.setAttribute("class", "text-danger");
 }
 
 function markAsCorrect(event) {
     if(event.target !== undefined)
-        (event.target).setAttribute("class", "validation");
+        (event.target).setAttribute("class", "text-success");
 }
 
 function disableSubmit() {
