@@ -24,6 +24,6 @@ Email | Password
 `admin@example.com` | `Admin1111`
 `user1@example.com` | `User1111`
 ## Pictures
-![1][readme/1.png]
-![2][readme/2.png]
-![3][readme/3.png]
+![1](readme/1.png)
+![2](readme/2.png)
+![3](readme/3.png)
